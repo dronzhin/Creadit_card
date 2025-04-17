@@ -6,11 +6,14 @@ import os
 
 def get_best_model(data: pd.DataFrame, trial =10, start_epochs = 10, finish_epochs = 50):
 
+    if isinstance(data, str) and data.strip() != '':
+        data = pd.read_csv(data)
+
     # Получение обучающей и тестовой выборки
-    if data is not None and not data.empty:
+    if data is not None  and not data.empty:
         x_train, x_test, y_train, y_test = create_dataset(data, 0.1)
     elif os.path.exists('data.pickle'):
-        # Загрузка датасета из pickle [[9]]
+        # Загрузка датасета из pickle
         with open('data.pickle', 'rb') as f:
             data_load = pickle.load(f)
             x_train = data_load['x_train']
@@ -61,9 +64,26 @@ def create_dataset(data: pd.DataFrame, test_size, column = None):
 
 if __name__ == '__main__':
 
-    # Относительный путь к файлу
-    path = "creditcard_2023.csv"
+    # # Относительный путь к файлу
+    # path = "creditcard_2023.csv"
+    #
+    # # Проверка работы автокерас
+    # result = get_best_model(path, trial =20, start_epochs = 10, finish_epochs = 50)
+    #
+    # with open('model_keras.pickle', 'wb') as f:
+    #     pickle.dump(result, f)
+    with open('model_keras.pickle', 'rb') as f:
+        result = pickle.load(f)
 
-    # Проверка работы автокерас
-    result = get_best_model(path, trial =2, start_epochs = 3)
     print(result['history'])
+    print(result['best_model'].summary())
+
+    from tensorflow.keras.utils import plot_model
+
+    # Генерация изображения графа
+    plot_model(
+        result['best_model'],
+        to_file="model.png",
+        show_shapes=True,
+        show_layer_names=True
+    )
