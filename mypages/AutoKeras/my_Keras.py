@@ -65,7 +65,7 @@ def create_dataset(data: pd.DataFrame, test_size, column = None):
 if __name__ == '__main__':
 
     # # Относительный путь к файлу
-    # path = "creditcard_2023.csv"
+    # path = "/home/dmitry/PycharmProjects/Creadit_card/dataset/creditcard_2023.csv"
     #
     # # Проверка работы автокерас
     # result = get_best_model(path, trial =20, start_epochs = 10, finish_epochs = 50)

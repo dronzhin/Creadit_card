@@ -15,7 +15,7 @@ def load_tf_model():
     return model
 
 def load_data_sample():
-    df = pd.read_csv("mypages/AutoKeras/creditcard_2023.csv").sample(10)
+    df = pd.read_csv("dataset/creditcard_2023.csv").sample(10)
     return df
 
 def load():
